@@ -4,6 +4,13 @@
 
 namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2
 {
+    /* https://tools.ietf.org/html/rfc7540#section-6.7
+        +---------------------------------------------------------------+
+        |                                                               |
+        |                      Opaque Data (64)                         |
+        |                                                               |
+        +---------------------------------------------------------------+
+    */
     public partial class Http2Frame
     {
         public Http2PingFrameFlags PingFlags
@@ -14,7 +21,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2
 
         public void PreparePing(Http2PingFrameFlags flags)
         {
-            Length = 8;
+            PayloadLength = 8;
             Type = Http2FrameType.PING;
             PingFlags = flags;
             StreamId = 0;

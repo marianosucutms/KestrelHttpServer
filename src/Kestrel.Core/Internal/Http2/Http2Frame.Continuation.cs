@@ -4,6 +4,11 @@
 
 namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2
 {
+    /* https://tools.ietf.org/html/rfc7540#section-6.10
+        +---------------------------------------------------------------+
+        |                   Header Block Fragment (*)                 ...
+        +---------------------------------------------------------------+
+    */
     public partial class Http2Frame
     {
         public Http2ContinuationFrameFlags ContinuationFlags
@@ -14,7 +19,7 @@ namespace Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2
 
         public void PrepareContinuation(Http2ContinuationFrameFlags flags, int streamId)
         {
-            Length = MinAllowedMaxFrameSize - HeaderLength;
+            PayloadLength = MinAllowedMaxFrameSize - HeaderLength;
             Type = Http2FrameType.CONTINUATION;
             ContinuationFlags = flags;
             StreamId = streamId;
